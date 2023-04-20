@@ -51,7 +51,7 @@ export default function Search(props) {
                 },
             })
         const searchRes = await response.json();
-        if (searchRes && !response.status) {
+        if (searchRes && response.status) {
             setSearchRes(searchRes);
         }
         else {
@@ -76,8 +76,9 @@ export default function Search(props) {
             })
 
         const searchRes = await response.json();
-        if (searchRes && !response.status) {
-            setSearchRes(searchRes);
+        if (searchRes && response.status) {
+            setSearchRes(searchRes.results);
+            console.log(searchRes, "test");
         }
         else {
             setSearchRes([]);
@@ -112,9 +113,9 @@ export default function Search(props) {
 
                     <Filter searchRes={searchRes} list={listParams} />
                     <Button className="searchbutton" variant="primary" type="submit" onClick={getData}>Search</Button>
-                    {(searchRes === [] || listParams.current.length === 0) ? <></> :
-                        <List data={searchRes} type={(listParams.current[0].type === 'ingredient') ? "ingreidentSearch" : "recipeSearch"} />}
                 </Form>
+                {(searchRes === [] || listParams.current.length === 0) ? <></> :
+                    <List data={searchRes} type={(listParams.current[0].type === 'ingredient') ? "ingreidentSearch" : "recipeSearch"} />}
             </div>
         </>
     )

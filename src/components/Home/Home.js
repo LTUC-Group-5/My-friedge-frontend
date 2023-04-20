@@ -62,7 +62,7 @@ export default function Home() {
 
         let recivedData = await response.json();
 
-        if (recivedData && !response.status) {
+        if (recivedData && response.status) {
             recivedData = recivedData.map((item) => {
                 return {
                     id: item.id,
