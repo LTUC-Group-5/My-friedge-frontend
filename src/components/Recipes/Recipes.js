@@ -4,7 +4,7 @@ export default function Recipes() {
 
     const [favRecipes, setFavRecipes] = useState([]);
     async function getFavRecipes(userID) {
-        let allRecipes = `https://my-friedge.onrender.com/allRecipes`;
+        let allRecipes = `${process.env.REACT_APP_SERVER_URL}/allRecipes`;
         
         let response = await fetch(allRecipes, {
             method: 'GET',

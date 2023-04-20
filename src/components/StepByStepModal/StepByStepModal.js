@@ -9,7 +9,7 @@ export default function StepByStepModal(props) {
     const [stepByStep, setStepByStep] = useState([]);
 
     async function recipeAnalyzedInstructions() {
-        let url =`https://my-friedge.onrender.com/recipeAnalyzedInstructions?id=${props.id}`;
+        let url =`${process.env.REACT_APP_SERVER_URL}/recipeAnalyzedInstructions?id=${props.id}`;
         const response = await fetch(url, {
             method: "GET",
         });
