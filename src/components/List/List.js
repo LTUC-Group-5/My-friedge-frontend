@@ -32,7 +32,7 @@ function List(props) {
         console.log(opirationsList);
         element.preventDefault();
         if (props.type === "choice") {
-            props.modalCloseHandler();
+            props.choiceSubmit();
         }
 
         let baseURL = process.env.REACT_APP_SERVER_URL;
@@ -79,7 +79,7 @@ function List(props) {
     console.log('data in list', data);
     return (
 
-        (data.length !== 0) ?
+        (data && data.length !== 0) ?
             <div className="list-wraper">
                 <div className="cards-container">
                     {data.map((obj, index) => {
@@ -103,7 +103,7 @@ function List(props) {
                 </div>
             </div>
 
-            : <h1>List is Empty</h1>
+            : <h1>List is Empty :( </h1>
 
     )
 

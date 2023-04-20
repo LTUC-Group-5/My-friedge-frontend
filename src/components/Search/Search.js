@@ -1,7 +1,7 @@
 
 import '../Search/Search.css';
 
-import SearchResult from "../SearchResult/SearchResult";
+import List from "../List/List";
 import Filter from "../Filter/Filter"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -11,7 +11,7 @@ import { logDOM } from '@testing-library/react';
 
 export default function Search(props) {
 
-    const listParams = useRef([]);
+    const listParams = useRef([{ type: "ingredient" }]);
     const [searchRes, setSearchRes] = useState([])
     const [inputValue, setInputValue] = useState('');
 
@@ -51,7 +51,7 @@ export default function Search(props) {
                 },
             })
         const searchRes = await response.json();
-        if (response.status !== "500" || !response.status) {
+        if (searchRes && !response.status) {
             setSearchRes(searchRes);
         }
         else {
@@ -75,9 +75,15 @@ export default function Search(props) {
                 },
             })
 
-
         const searchRes = await response.json();
-        setSearchRes(searchRes.results);
+        if (searchRes && !response.status) {
+            setSearchRes(searchRes);
+        }
+        else {
+            setSearchRes([]);
+            console.log("empty data", response)
+        }
+
         console.log(searchRes);
     }
 
@@ -98,23 +104,18 @@ export default function Search(props) {
     return (
         <>
             <div className="searchform">
-                
-
-                    <Form className="form">
-                        <h3 className="h3-title">Let's find what you want :</h3>
-                        <Form.Control size="lg" type="text" onChange={handleInputChange} placeholder="Search..." required />
-
-                        <Filter searchRes={searchRes} list={listParams} />
-                        <Button className="searchbutton" variant="primary" type="submit" onClick={getData}>Search</Button>
-
-                    </Form>
 
 
+                <Form className="form">
+                    <h3 className="h3-title">Let's find what you want :</h3>
+                    <Form.Control size="lg" type="text" onChange={handleInputChange} placeholder="Search..." required />
 
+                    <Filter searchRes={searchRes} list={listParams} />
+                    <Button className="searchbutton" variant="primary" type="submit" onClick={getData}>Search</Button>
                     {(searchRes === [] || listParams.current.length === 0) ? <></> :
-                        <SearchResult data={searchRes} type={(listParams.current[0].type === 'ingredient') ? "ingreidentSearch" : "recipeSearch"} />}
-                </div>
-
-            </>
-            )
+                        <List data={searchRes} type={(listParams.current[0].type === 'ingredient') ? "ingreidentSearch" : "recipeSearch"} />}
+                </Form>
+            </div>
+        </>
+    )
 }

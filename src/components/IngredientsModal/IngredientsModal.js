@@ -1,7 +1,6 @@
 import { Modal } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner'
-import { useState, useEffect, useRef } from "react";
 import List from '../List/List'
 import './IngredientsModal.css'
 
@@ -26,13 +25,13 @@ export default function IngredientsModal(props) {
                   look for ingredients
                 </Button></a>
 
-                <Button variant="primary" type="submit" onClick={props.handleClose}>
+                <Button variant="primary" type="submit" onClick={props.getRandom}>
                   get random recipy
                 </Button></div>
             </>
 
             : <><Modal.Title>Please choose the ingredients you want for your meal</Modal.Title>
-              <List data={ingredients} type={"choice"} choiceList={props.choiceList} modalCloseHandler={props.handleClose}/>
+              <List data={ingredients} type={"choice"} choiceList={props.choiceList} modalCloseHandler={props.handleClose} choiceSubmit={props.choiceSubmit}/>
             </>
           }
         </Modal.Body>
