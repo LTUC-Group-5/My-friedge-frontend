@@ -38,7 +38,7 @@ export default function Search(props) {
             .join("&");
 
         console.log(queryString);
-        const baseURL = `https://my-friedge.onrender.com/complexSearch?query=${inputValue}${queryString}&number=10`;
+        const baseURL = `${process.env.REACT_APP_SERVER_URL}/complexSearch?query=${inputValue}${queryString}&number=10`;
         console.log("url base", baseURL);
 
         const response = await fetch(baseURL,
@@ -62,7 +62,7 @@ export default function Search(props) {
         console.log(searchRes);
     }
     async function getIngredients(element) {
-        const baseURL = `https://my-friedge.onrender.com/searchIngredients?query=${inputValue}&number=10`;
+        const baseURL = `${process.env.REACT_APP_SERVER_URL}/searchIngredients?query=${inputValue}&number=10`;
         console.log("url base", baseURL);
 
         const response = await fetch(baseURL,

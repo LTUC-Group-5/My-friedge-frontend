@@ -78,7 +78,7 @@ export default function Home() {
 
     async function getRandomRecipe() {
 
-        const baseURL = `https://my-friedge.onrender.com/randomRecipes`;
+        const baseURL = `${process.env.REACT_APP_SERVER_URL}/randomRecipes`;
 
         const response = await fetch(baseURL,
             {
