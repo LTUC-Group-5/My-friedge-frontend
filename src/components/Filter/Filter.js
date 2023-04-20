@@ -2,13 +2,7 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-
-
-
-
-
-
- function Filter (props) {
+function Filter(props) {
 
     const listParams = props.list;
     const [state, setState] = useState({ type: "ingredient" });
@@ -26,21 +20,21 @@ import Form from 'react-bootstrap/Form';
     }
 
     const handleChange = (element) => {
-        
+
         let data = JSON.parse(element.target.value);
         replace(listParams.current, data);
-        if (data.type !== undefined){
+        if (data.type !== undefined) {
             setState(data);
         }
-        console.log(listParams.current,element);
+        console.log(listParams.current, element);
 
     }
-    
- 
+
+
 
     return (
         <>
-            <Form.Select aria-label="Default select example" onChange={handleChange}defaultValue={"chose"}>
+            <Form.Select aria-label="Default select example" onChange={handleChange} defaultValue={"chose"}>
                 <option value={JSON.stringify({ type: "ingredient" })}>Ingredient</option>
                 <option value={JSON.stringify({ type: "recipe" })}>Recipe</option>
             </Form.Select>
@@ -61,7 +55,7 @@ import Form from 'react-bootstrap/Form';
                     </Form.Select>
                 </>
             }
-            
+
         </>
     )
 
@@ -69,6 +63,5 @@ import Form from 'react-bootstrap/Form';
 
 
 }
-
 
 export default Filter

@@ -21,16 +21,18 @@ export default function Home() {
         this.id = obj.id
     }
 
+    const choiceSubmit = () => {
+        setShow(false);
+        if (choiceList.current.length !== 0) {
+            searchByIngredient();
+
+            choiceList.current = [];
+            console.log(choiceList.current);
+        }
+    }
+
     const handleClose = (e) => {
         setShow(false);
-        if (choiceList.current.length === 0) {
-            getRandomRecipe();
-        }
-        else {
-            searchByIngredient();
-        }
-        choiceList.current = [];
-        console.log(choiceList.current);
     }
 
     function handleShow() {
@@ -41,7 +43,6 @@ export default function Home() {
     async function getFavorateIngredients() {
         let baseURL = process.env.REACT_APP_SERVER_URL;
         let ingredientURL = '/allIngredients?userID=1';
-        console.log("main",ingredientURL);
         setIngredient("loading");
         let recipeResponse = await fetch(baseURL + ingredientURL, {
             method: 'GET',
@@ -55,23 +56,24 @@ export default function Home() {
         let baseURL = process.env.REACT_APP_SERVER_URL;
         let ingredientURL = `/findByIngredients?ingredients=${JSON.stringify(choiceList)}`;
         setIngredient("loading");
-        let recipeResponse = await fetch(baseURL + ingredientURL, {
+        let response = await fetch(baseURL + ingredientURL, {
             method: 'GET',
         })
 
-        let recivedData = await recipeResponse.json();
-        recivedData = recivedData.map((item) => {
-            return {
-                id: item.id,
-                title: item.title,
-                image: item.image
-            }
-        })
-        console.log("by ingredient", recivedData);
-        setData(recivedData);
+        let recivedData = await response.json();
 
-        // console.log("sent data");
-        // setData(mockData);
+        if (recivedData && !response.status) {
+            recivedData = recivedData.map((item) => {
+                return {
+                    id: item.id,
+                    title: item.title,
+                    image: item.image
+                }
+            })
+            console.log("by ingredient", recivedData);
+            setData(recivedData);
+        }
+
     }
 
     async function getRandomRecipe() {
@@ -110,11 +112,12 @@ export default function Home() {
                     </h4>
 
                     <Button className="button large" variant="primary" type="submit" onClick={handleShow}>find a recipe</Button>
-                    <IngredientsModal show={show} ingredients={ingredients} handleClose={handleClose} choiceList={choiceList} /></div>
+                    <IngredientsModal show={show} ingredients={ingredients} handleClose={handleClose} choiceList={choiceList}
+                        choiceSubmit={choiceSubmit} getRandom={() => { getRandomRecipe(); handleClose(); }} /></div>
             </div>
             {(data.length !== 0) ? <List data={data} type={"recipeSearch"} /> : <></>}
         </>
 
     )
-}
 
+}

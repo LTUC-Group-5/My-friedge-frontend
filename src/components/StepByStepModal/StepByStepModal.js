@@ -17,13 +17,14 @@ export default function StepByStepModal(props) {
         setStepByStep(data);
     }
 
-    useEffect(() => {
+    async function renderModalData(params) {
         recipeAnalyzedInstructions();
-    }, [])
+        setShowModal(true);
+    }
 
     return (
         <>
-            <Button onClick={() => setShowModal(true)}>
+            <Button onClick={renderModalData}>
                 Show Steps
             </Button>
 
